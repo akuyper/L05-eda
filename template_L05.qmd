@@ -1,0 +1,282 @@
+---
+title: "L05 Exploratory Data Analysis"
+subtitle: "Data Science 1 with R (STAT 301-1)"
+author: "YOUR NAME"
+
+format:
+  html:
+    toc: true
+    embed-resources: true
+    code-fold: show
+    link-external-newwindow: true
+
+execute:
+  warning: false
+  
+from: markdown+emoji 
+---
+
+
+::: {.callout-tip icon=false}
+
+## Github Repo Link
+
+To link to your github **repo**sitory, appropriately edit the example link below. Meaning replace `https://your-github-repo-url` with your github repo url. Suggest verifying the link works before submitting.
+
+[https://your-github-repo-url](https://your-github-repo-url)
+
+:::
+
+## Overview
+
+The goal of this lab is to begin to use data visualization and transformation skills to explore data in a systematic way. We call this exploratory data analysis (EDA). 
+
+## Load packages
+
+You should always begin by loading all necessary packages towards the beginning of your document.
+
+```{r}
+#| label: load-pkgs
+
+# Loading package(s)
+
+```
+
+
+## Datasets 
+
+This lab utilizes the `diamonds` and `flights` datasets contained in packages `ggplot2` and `nycflights13`, respectively. Documentation/codebook can be accessed with `?diamonds` and `?flights`, provided you have installed and loaded `nycflights13` and `tidyverse` in your current R session.      
+
+## Exercises
+
+### Exercise 1 
+
+Explore the distribution of each of the `x`, `y`, and `z` variables in `diamonds`. What do you learn? Think about a diamond; think about how we might determine which dimension of a diamond is its length, width, and depth.
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 2
+
+Explore the distribution of `price`. Do you discover anything unusual or surprising? 
+
+*Hint:* Carefully think about the `binwidth` and make sure you try a wide range of values.
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 3
+
+What is the major difference between using `coord_cartesian()` vs `xlim()` or `ylim()` to zoom in on a histogram/graphic? What happens if you leave `binwidth` unset? What happens if you try to zoom so only half a bar shows?
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 4
+
+What happens to missing values in a histogram? What happens to missing values in a bar chart? Why is there a difference in how missing values are handled in histograms and bar charts?
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 5
+
+Based on EDA, what variables in the diamonds dataset appears to be most important for predicting the price of a diamond? How is that variable correlated with cut? Why does the combination of those two relationships lead to lower-quality diamonds being more expensive?
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 6
+
+One problem with boxplots is that they were developed in an era of much smaller datasets and tend to display a prohibitively large number of “outlying values”. One approach to remedy this problem is the letter value plot. Install the `lvplot` package, and try using `geom_lv()` to display the distribution of price vs. cut. What do you learn? How do you interpret the plots?
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 7
+
+Create a visualization of diamond prices vs. a categorical variable from the diamonds dataset using `geom_violin()`, then a faceted `geom_histogram()`, then a colored `geom_freqpoly()`, and then a colored `geom_density()`. Compare and contrast the four plots. What are the pros and cons of each method of visualizing the distribution of a numerical variable based on the levels of a categorical variable?
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 8
+
+Can you rescale the data used in the plot below to more clearly show the distribution of cut within color, or color within cut? Starting from the code below, use rescaling to show the distribution of (a) cut within color and (b) color within cut.  
+
+```{r}
+#| label: ex-08
+
+# joint distribution of cut & color
+diamonds %>% 
+  count(color, cut) %>%  
+  ggplot(mapping = aes(x = color, y = cut)) +
+    geom_tile(mapping = aes(fill = n))
+```
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 9
+
+In Exercise 8, why is it slightly better to use `aes(x = color, y = cut)` instead of `aes(x = cut, y = color)`?
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 10
+
+Use the `smaller` dataset defined below for this exercise. Visualize the distribution of `carat` broken down by `price`. Construct 2 graphics, one using `cut_width()` and the other using `cut_number()`.
+
+```{r}
+#| label: ex-10
+
+smaller <- diamonds %>% 
+  filter(carat < 3)
+```
+
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 11
+
+How does the price distribution of very large diamonds compare to small diamonds? Is it as you expect, or does it surprise you?
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 12
+
+Examining missingness is another key aspect of any exploratory data analysis. We will learn more about types of missingness in Chapter 18, but for now we will learn how to visualize missingness. Install the [`naniar` package](https://naniar.njtierney.com/index.html), and explore the help documentation:
+  
+  - [Getting Started with Naniar](https://cran.r-project.org/web/packages/naniar/vignettes/getting-started-w-naniar.html)
+  - [Naniar Visualizations](https://cran.r-project.org/web/packages/naniar/vignettes/naniar-visualisation.html)
+  
+Use the `gg_miss_var()` function to determine which variables have missingness issues in the `flights` dataset. Use the `miss_var_summary()` to get the exact counts. If you have a lot of variables that table could get long and messy, filter out any observations in the table with no missingness.
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 13
+
+Demonstrate the use of at least 2 other functions from the `naniar` package to visualize missingness on a dataset of your choice and describe what the functions do.
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+### Exercise 14
+
+You are trying to calculate the number of flights that departed `late`, `on_time`, and `early` but can't quite seem to get your code to run correctly. The code you have written is below.
+
+Create a Reprex (reproducible example) that you would be able to post to a help site such as StackOverflow. Your solution should be the entire hypothetical post that you would make. Then provide an answer to your post.
+
+```{r}
+#| label: ex-14
+
+flights |> 
+  summarize(
+    late = sum(dep_delay > 0),
+    on_time = sum(dep_delay == 0),
+    early = sum(dep_delay < 0)
+    )
+```
+
+::: {.callout-tip icon="false"}
+## Question
+
+YOUR POST HERE
+
+:::
+
+::: {.callout-tip icon="false"}
+## Response
+
+YOUR RESPONSE HERE
+
+:::
+
+## Case Study
+
+Use the `tinder_data` file in the `data` subdirectory to **develop 1 research question pertaining to the dataset**.^[This dataset was sourced from [Swipestats.io](https://www.swipestats.io/).]
+
+- Explore your research question using at least 3 visualizations
+- Ideally these should be different types of explorations (uni-variate, bi-variate, and multi-variate) but this may vary depending on your research question
+
+In your write-up, state your research question, explain any insights you gained from the supporting visualizations, incorporate your graphics in appropriate places in the document, and state any new questions or conclusions. Students should hide their code for this case study report.
+
+::: {.callout-tip icon="false"}
+## Solution
+
+YOUR SOLUTION HERE
+
+:::
+
+## Graduate Challenge
+
+::: callout-important
+
+Graduate students are required to complete this challenge. **It is optional for undergraduate students.**
+
+:::
+
+Use Chapter 11 to improve your graphics for the case study above. This includes:
+
+- adding titles, renaming x- and y- axis
+- **If appropriate,** change the scale of the variables
+- **If appropriate,** us a zoom feature
+- add a `theme_*()
+- layout the plots together using the `patchwork()` package
+- be creative and have fun!
