@@ -2,18 +2,24 @@
 title: "L05 Exploratory Data Analysis"
 subtitle: "Data Science 1 with R (STAT 301-1)"
 author: "YOUR NAME"
+pagetitle: "L05 YOUR NAME"
+date: today
 
 format:
   html:
     toc: true
+    toc-depth: 4
+    toc-location: left
     embed-resources: true
-    code-fold: show
+    code-fold: false
     link-external-newwindow: true
 
 execute:
   warning: false
-  
-from: markdown+emoji 
+
+from: markdown+emoji
+reference-location: margin
+citation-location: margin  
 ---
 
 
@@ -75,7 +81,7 @@ YOUR SOLUTION HERE
 
 ### Exercise 3
 
-What is the major difference between using `coord_cartesian()` vs `xlim()` or `ylim()` to zoom in on a histogram/graphic? What happens if you leave `binwidth` unset? What happens if you try to zoom so only half a bar shows?
+What is the major difference between using `coord_cartesian()` vs `xlim()` or `ylim()` to zoom in on a histogram/graphic? What happens if you leave `binwidth` unset? What happens if you try to zoom in so only half a bar shows?
 
 ::: {.callout-tip icon="false"}
 ## Solution
@@ -130,14 +136,16 @@ YOUR SOLUTION HERE
 
 ### Exercise 8
 
-Can you rescale the data used in the plot below to more clearly show the distribution of cut within color, or color within cut? Starting from the code below, use rescaling to show the distribution of (a) cut within color and (b) color within cut.  
+The plot below provides a visualization of the joint distribution of the cut and color of diamonds in our dataset. We want to more clearly see how the distribution of cut changes given color. Similarly we want to more clearly see how the distribution of color changes given cut. Put another way we want to see the distribution of color within cut. To do this we need to appropriately rescale the data. 
+
+Rescale the data used in the plot below to more clearly show the distribution of (a) cut within color, and then (b) then color within cut. 
 
 ```{r}
 #| label: ex-08
 
 # joint distribution of cut & color
-diamonds %>% 
-  count(color, cut) %>%  
+diamonds |> 
+  count(color, cut) |>  
   ggplot(mapping = aes(x = color, y = cut)) +
     geom_tile(mapping = aes(fill = n))
 ```
@@ -167,7 +175,7 @@ Use the `smaller` dataset defined below for this exercise. Visualize the distrib
 ```{r}
 #| label: ex-10
 
-smaller <- diamonds %>% 
+smaller <- diamonds |> 
   filter(carat < 3)
 ```
 
@@ -257,6 +265,14 @@ Use the `tinder_data` file in the `data` subdirectory to **develop 1 research qu
 
 In your write-up, state your research question, explain any insights you gained from the supporting visualizations, incorporate your graphics in appropriate places in the document, and state any new questions or conclusions. Students should hide their code for this case study report.
 
+::: {.callout-warning}
+
+Remember, the final product is meant for your boss and they expect your work to be clear, to the point, and presentable! They don't care about code so it shouldn't be visible or even accessible. 
+
+Make your graphic(s) look nice. If you include summary statistics, then only include relevant columns and they should be displayed as a table.
+
+:::
+
 ::: {.callout-tip icon="false"}
 ## Solution
 
@@ -277,6 +293,6 @@ Use Chapter 11 to improve your graphics for the case study above. This includes:
 - adding titles, renaming x- and y- axis
 - **If appropriate,** change the scale of the variables
 - **If appropriate,** us a zoom feature
-- add a `theme_*()
+- add a `theme_*()`
 - layout the plots together using the `patchwork()` package
 - be creative and have fun!
